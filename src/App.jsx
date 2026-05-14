@@ -348,9 +348,9 @@ function App() {
             <article className="glass-card space-y-3">
               {[
                 { label: 'GitHub', href: 'https://github.com/pillyigshankar' },
-                { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-                { label: 'Email', href: 'mailto:hello@antigravity.dev' },
-                { label: 'LeetCode', href: 'https://leetcode.com/' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/pillyigshankar/' },
+                { label: 'Email', href: 'mailto:pillyigshankar@gmail.com' },
+                { label: 'LeetCode', href: 'https://leetcode.com/u/pillyigshankar/' },
               ].map((link) => (
                 <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="block rounded-xl border border-cyan-200/30 bg-cyan-400/5 px-4 py-3 text-sm text-cyan-100 transition hover:shadow-[0_0_20px_rgba(34,211,238,.4)]">
                   {link.label}
