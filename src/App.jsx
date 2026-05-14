@@ -15,23 +15,39 @@ const journey = [
   { year: 'Now', title: 'Engineering Premium Digital Systems' },
 ]
 
-const skills = ['Java', 'Spring Boot', 'React', 'PostgreSQL', 'AWS', 'Docker', 'GitHub', 'AI/ML', 'Full Stack Development']
+const skills = [
+  { name: 'Java', proficiency: 95 },
+  { name: 'Spring Boot', proficiency: 92 },
+  { name: 'React', proficiency: 90 },
+  { name: 'PostgreSQL', proficiency: 88 },
+  { name: 'AWS', proficiency: 86 },
+  { name: 'Docker', proficiency: 85 },
+  { name: 'GitHub', proficiency: 90 },
+  { name: 'AI/ML', proficiency: 84 },
+  { name: 'Full Stack Development', proficiency: 93 },
+]
 
 const projects = [
   {
     title: 'NeuroFlow Commerce Engine',
     stack: 'Java • Spring Boot • PostgreSQL • AWS',
     description: 'AI-driven commerce backend with predictive recommendations, secure APIs, and real-time analytics.',
+    github: 'https://github.com/pillyigshankar/ExamplePortfolio',
+    demo: '#contact',
   },
   {
     title: 'Sentinel Ops Dashboard',
     stack: 'React • Node • Docker • GitHub Actions',
     description: 'Mission-control observability UI with anomaly alerts, latency heatmaps, and role-based command views.',
+    github: 'https://github.com/pillyigshankar/ExamplePortfolio',
+    demo: '#contact',
   },
   {
     title: 'Astra Talent Graph',
     stack: 'Full Stack • AI/ML • Vector Search',
     description: 'Recruiter-focused intelligence platform for semantic skill matching and profile scoring automation.',
+    github: 'https://github.com/pillyigshankar/ExamplePortfolio',
+    demo: '#contact',
   },
 ]
 
@@ -113,10 +129,10 @@ function ProjectCard({ project }) {
       <p className="mt-2 text-sm text-cyan-200">{project.stack}</p>
       <p className="mt-3 text-sm leading-relaxed text-slate-200">{project.description}</p>
       <div className="mt-5 flex gap-3">
-        <a className="rounded-xl border border-cyan-300/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200 transition hover:shadow-[0_0_20px_rgba(34,211,238,.5)]" href="#" aria-label={`${project.title} GitHub`}>
+        <a className="rounded-xl border border-cyan-300/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200 transition hover:shadow-[0_0_20px_rgba(34,211,238,.5)]" href={project.github} target="_blank" rel="noreferrer" aria-label={`${project.title} GitHub`}>
           GitHub
         </a>
-        <a className="rounded-xl border border-purple-300/50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-purple-100 transition hover:shadow-[0_0_20px_rgba(216,180,254,.5)]" href="#" aria-label={`${project.title} Live Demo`}>
+        <a className="rounded-xl border border-purple-300/50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-purple-100 transition hover:shadow-[0_0_20px_rgba(216,180,254,.5)]" href={project.demo} aria-label={`${project.title} Live Demo`}>
           Live Demo
         </a>
       </div>
@@ -127,6 +143,7 @@ function ProjectCard({ project }) {
 function App() {
   const [cursor, setCursor] = useState({ x: 0, y: 0 })
   const [currentCommand, setCurrentCommand] = useState(commands[0])
+  const [messageSent, setMessageSent] = useState(false)
 
   const particles = useMemo(
     () =>
@@ -255,17 +272,17 @@ function App() {
 
         <AnimatedSection id="skills" title="Skills" subtitle="Capability Matrix">
           <div className="grid gap-4 md:grid-cols-3">
-            {skills.map((skill, index) => (
-              <article key={skill} className="group rounded-2xl border border-white/15 bg-white/5 p-4 backdrop-blur-xl transition hover:border-cyan-300/40">
+            {skills.map((skill) => (
+              <article key={skill.name} className="group rounded-2xl border border-white/15 bg-white/5 p-4 backdrop-blur-xl transition hover:border-cyan-300/40">
                 <div className="flex items-center justify-between">
-                  <p className="font-semibold text-white">{skill}</p>
-                  <span className="text-xs text-cyan-200">{88 - index}%</span>
+                  <p className="font-semibold text-white">{skill.name}</p>
+                  <span className="text-xs text-cyan-200">{skill.proficiency}%</span>
                 </div>
                 <div className="mt-3 h-2 rounded-full bg-slate-900/80">
                   <motion.div
                     className="h-full rounded-full bg-gradient-to-r from-cyan-300 to-blue-500"
                     initial={{ width: 0 }}
-                    whileInView={{ width: `${88 - index}%` }}
+                    whileInView={{ width: `${skill.proficiency}%` }}
                     viewport={{ once: true }}
                   />
                 </div>
@@ -329,19 +346,31 @@ function App() {
         <AnimatedSection id="contact" title="Contact" subtitle="Communication Terminal">
           <div className="grid gap-4 md:grid-cols-2">
             <article className="glass-card space-y-3">
-              {['GitHub', 'LinkedIn', 'Email', 'LeetCode'].map((link) => (
-                <a key={link} href="#" className="block rounded-xl border border-cyan-200/30 bg-cyan-400/5 px-4 py-3 text-sm text-cyan-100 transition hover:shadow-[0_0_20px_rgba(34,211,238,.4)]">
-                  {link}
+              {[
+                { label: 'GitHub', href: 'https://github.com/pillyigshankar' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
+                { label: 'Email', href: 'mailto:hello@antigravity.dev' },
+                { label: 'LeetCode', href: 'https://leetcode.com/' },
+              ].map((link) => (
+                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="block rounded-xl border border-cyan-200/30 bg-cyan-400/5 px-4 py-3 text-sm text-cyan-100 transition hover:shadow-[0_0_20px_rgba(34,211,238,.4)]">
+                  {link.label}
                 </a>
               ))}
             </article>
-            <form className="glass-card space-y-3">
+            <form
+              className="glass-card space-y-3"
+              onSubmit={(event) => {
+                event.preventDefault()
+                setMessageSent(true)
+              }}
+            >
               <input className="terminal-input" type="text" placeholder="Your Name" />
               <input className="terminal-input" type="email" placeholder="Your Email" />
               <textarea className="terminal-input min-h-32" placeholder="Message" />
-              <button type="button" className="w-full rounded-xl border border-cyan-200/40 bg-cyan-400/20 px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-100 transition hover:shadow-[0_0_20px_rgba(34,211,238,.5)]">
+              <button type="submit" className="w-full rounded-xl border border-cyan-200/40 bg-cyan-400/20 px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-100 transition hover:shadow-[0_0_20px_rgba(34,211,238,.5)]">
                 Transmit Message
               </button>
+              {messageSent ? <p className="text-xs text-green-300">Transmission received. Response channel active.</p> : null}
             </form>
           </div>
         </AnimatedSection>
